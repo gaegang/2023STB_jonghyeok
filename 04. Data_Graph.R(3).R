@@ -27,8 +27,8 @@ hist(X_Week4_2023_STB_survey_2_$Age, main="경영통계분석2 4주차 실습", 
 
 
 #10step. grade별 age를 비교하는 박스플롯 만들기
-boxplot(3)
-boxplot(X_Week4_2023_STB_survey_2grade_$Grade, X_Week4_2023_STB_survey_2grade_$Age, main=" 학년과 나이의 관계", col="red", names = c("2","3","4"))
+boxplot(X_home_2grade$Age, X_home_3grade$Age, X_home_4grade$Age, main=" 학년과 나이의 관계", col="yellow", names = c("2","3","4"))
+
 
 
 #11step. grade를 x값, age를 y값으로 하는 산점도 만들기
