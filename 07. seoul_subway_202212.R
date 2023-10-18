@@ -36,6 +36,8 @@ str(subway)
 #1.승차/하차승객수
 subway%>% 
   summarise(on_m=mean(on_board), off_m=mean(getting_off))
+#1답. 승차10966/ 하차10925
+
 
 #2.승차승객수가 가장 많은 역의 노선은?
 #2-1. soulution
@@ -43,6 +45,8 @@ max(subway$on_board)
 subway%>% 
   filter(on_board==94732)%>% 
   select(Date, Line, Station, on_board)
+#2답. 2호선, 잠실(송파구청), 승차승객94732
+
 
 #3.역별 하루 평균 전체승객수 분석
 passenger10 <- subway %>%
@@ -52,11 +56,15 @@ passenger10 <- subway %>%
   head(10)
 
 head(passenger10, 3)
+#3답. 강남역이 148890명으로 가장많습니다.
+
 
 #4.역별 일평균 전체승객수 상위 10개 역을 막대그래프로 작성
 ggplot(data=passenger10, aes(x=reorder(Station, m), y=m))+
   geom_col()+
   coord_flip()
+#4답. plot 창에 나오고, passenger10의 순서대로 나옵니다. 
+
 
 #5. 일별 전체승객 분석
 subway %>%
@@ -64,6 +72,8 @@ subway %>%
   summarise(total=sum(total_passenger)) %>%
   arrange(desc(total)) %>%
   head(3)
+#5답.  전체인구 대비 승객비율   15699271/51558034
+#      수도권인구 대비 승객비율 15699271/23034430
 
 #6. 특정 line 분석(1호선)
 subway %>%
@@ -71,6 +81,9 @@ subway %>%
   filter(total_passenger==max(total_passenger)) %>%
   select(Date, Station, on_board, 
          getting_off, total_passenger)
+#6답. 1216일에 서울역에서 승차59873명, 하차 58758명
+#합쳐서 118631명이 사용하였습니다.
+
 
 #7. 노선별 전체승객 비율비교
 line_pct <- subway %>%
@@ -82,6 +95,8 @@ line_pct <- subway %>%
 line_pct %>%
   arrange(desc(pct)) %>%
   head(3)
+#7답. 2호선을 가장많이 이용하였습니다
+
 
 #8. 지하철 전체 승객 비율 막대그래프 그리기
 line_pct10 <- line_pct %>%
@@ -93,6 +108,7 @@ ggplot(data = line_pct10, aes(x=reorder(Line,pct),y=pct))+
   ggtitle("수도권 지하철 노선별 이용비율")+
   xlab("노선")+
   ylab("이용비율")
+#8답. plot창 확인 
 
 #9. 일별 전체승객 선그래프 그리기
 line_graph <- subway %>%
@@ -104,3 +120,4 @@ ggplot(data = line_graph, aes(x=day, y=s, group=1))+
   ggtitle("수도권 지하철 일별 이용승객수")+
   xlab("일")+
   ylab("이용승객")
+#9답. plot창 확인 
