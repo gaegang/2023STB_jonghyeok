@@ -77,7 +77,6 @@ mental%>%
   summarise(n=n())%>% #sex변수의 범주별 빈도 계산
   mutate(total=sum(n), #sex변수의 빈도 총계
          pct=round(n/total*100,1)) #sex변수의 범주별 비율
-#퀴즈1. 연령대별 성별 비율 확인 
 
 #.연령대별빈도분석
 mental%>%
@@ -85,6 +84,12 @@ mental%>%
   summarise(n=n())%>% #age변수의 범주별 빈도 계산
   mutate(total=sum(n), #age변수의 빈도 총계
          pct=round(n/total*100,1)) #age변수의 범주별 비율
+
+#퀴즈1. 연령대별 성별 만족도 비율 확인
+mental%>%
+  group_by(age,sex)%>%
+  summarise(m=mean(satisfaction))%>%
+  arrange(desc(m))%>% head(4)
 
 #.교차분석
 table(mental$sex, mental$age)
@@ -119,12 +124,18 @@ ztable(RA)
 vif(RA)
 
 #.회귀분석:가족신뢰도, 경제안정도, 건강상태가 외로움에 미치는 영향
-RA <-lm(data=mental, loneliness~family_belief+wealth+health)
-summary(RA)
+RB <-lm(data=mental, loneliness~family_belief+wealth+health)
+summary(RB)
 options(ztable.type="viewer")
-ztable(RA)
-vif(RA)
+ztable(RB)
+vif(RB)
+
 #퀴즈2. 자살충동에 미치는 영향은
+RC <-lm(data=mental, suicide~family_belief+wealth+health)
+summary(RC)
+options(ztable.type="viewer")
+ztable(RC)
+vif(RC)
 
 #.독립표본t검정:성별 삶의 만족도 차이
 t.test(data=mental, satisfaction~sex)
